@@ -36,7 +36,7 @@ download_release() {
 	local version filename url
 	version="$1"
 	filename="$2"
-	arch=$(uname -m)
+	raw_arch=$(uname -m)
 	os=""
 
 	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -44,13 +44,25 @@ download_release() {
 	elif [[ "$OSTYPE" == "darwin"* ]]; then
 		os="darwin"
 	else
+		fail "Unsupported OS: ${OSTYPE}"
+	else
 		# Fallback for older Bash versions or other shells
 		OS_NAME=$(uname -s)
 		if [ "$OS_NAME" = "Linux" ]; then
 			os="linux"
 		elif [ "$OS_NAME" = "Darwin" ]; then
 			os="darwin"
+		else
+			fail "Unsupported OS: ${OS_NAME}"
 		fi
+	fi
+
+	if [[ "$raw_arch" == *"arm64"* ]]; then
+		arch="arm64"
+	elif [[ "$raw_arch" == *"x86_64"* ]]; then
+		arch="amd64"
+	else
+		fail "Unsupported architecture: ${raw_arch}"
 	fi
 
 	url="$GH_REPO/releases/download/${version}/switcher_${os}_${arch}"
