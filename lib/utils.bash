@@ -4,7 +4,7 @@ set -euo pipefail
 
 GH_REPO="https://github.com/danielfoehrKn/kubeswitch"
 TOOL_NAME="kubeswitch"
-TOOL_TEST="switch --help"
+TOOL_TEST="switcher --help"
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
@@ -80,8 +80,8 @@ install_version() {
 
 	(
 		mkdir -p "$install_path"
-		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path/switch"
-		chmod +x "$install_path/switch"
+		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path/switcher"
+		chmod +x "$install_path/switcher"
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"

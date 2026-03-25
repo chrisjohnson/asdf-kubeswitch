@@ -37,6 +37,10 @@ asdf install kubeswitch latest
 # Set a version globally (on your ~/.tool-versions file)
 asdf set -u kubeswitch latest
 
+# Add the init (and optional completions) to your shell RC file
+echo 'source <(switcher init zsh)' >> ~/.zshrc
+echo 'source <(switch completion zsh)' >> ~/.zshrc
+
 # Now kubeswitch commands are available
 switch --help
 ```
