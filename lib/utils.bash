@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for kubeswitch.
 GH_REPO="https://github.com/danielfoehrKn/kubeswitch"
 TOOL_NAME="kubeswitch"
 TOOL_TEST="switch --help"
@@ -14,7 +13,6 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if kubeswitch is not hosted on GitHub releases.
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
 	curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
@@ -31,8 +29,6 @@ list_github_tags() {
 }
 
 list_all_versions() {
-	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-	# Change this function if kubeswitch has other means of determining installable versions.
 	list_github_tags
 }
 
@@ -40,9 +36,24 @@ download_release() {
 	local version filename url
 	version="$1"
 	filename="$2"
+	arch=$(uname -m)
+	os=""
 
-	# TODO: Adapt the release URL convention for kubeswitch
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		os="linux"
+	elif [[ "$OSTYPE" == "darwin"* ]]; then
+		os="darwin"
+	else
+		# Fallback for older Bash versions or other shells
+		OS_NAME=$(uname -s)
+		if [ "$OS_NAME" = "Linux" ]; then
+			os="linux"
+		elif [ "$OS_NAME" = "Darwin" ]; then
+			os="darwin"
+		fi
+	fi
+
+	url="$GH_REPO/releases/download/${version}/switcher_${os}_${arch}"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
