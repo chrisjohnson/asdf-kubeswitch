@@ -15,18 +15,13 @@
 
 # Dependencies
 
-**TODO: adapt this section**
-
-- `bash`, `curl`, `tar`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
+- `bash`, `curl`, and [POSIX utilities](https://pubs.opengroup.org/onlinepubs/9699919799/idx/utilities.html).
 
 # Install
 
 Plugin:
 
 ```shell
-asdf plugin add kubeswitch
-# or
 asdf plugin add kubeswitch https://github.com/chrisjohnson/asdf-kubeswitch.git
 ```
 
@@ -34,13 +29,13 @@ kubeswitch:
 
 ```shell
 # Show all installable versions
-asdf list-all kubeswitch
+asdf list all kubeswitch
 
 # Install specific version
 asdf install kubeswitch latest
 
 # Set a version globally (on your ~/.tool-versions file)
-asdf global kubeswitch latest
+asdf set -u kubeswitch latest
 
 # Now kubeswitch commands are available
 switch --help
