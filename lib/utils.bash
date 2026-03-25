@@ -44,8 +44,6 @@ download_release() {
 	elif [[ "$OSTYPE" == "darwin"* ]]; then
 		os="darwin"
 	else
-		fail "Unsupported OS: ${OSTYPE}"
-	else
 		# Fallback for older Bash versions or other shells
 		OS_NAME=$(uname -s)
 		if [ "$OS_NAME" = "Linux" ]; then
